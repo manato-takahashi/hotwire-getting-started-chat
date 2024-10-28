@@ -2,7 +2,7 @@
 
 <div class="messages-index">
   <div class="messages-index-body">
-    <%= turbo_frame_tag 'messages', class: 'messages-index-body' do %>
+    <%= turbo_frame_tag 'messages', class: 'messages-index-body', 'data-controller': 'messages' do %>
       <%= render partial: 'message', collection: @messages %>
     <% end %>
   </div>
