@@ -12,7 +12,7 @@ class MessagesController < ApplicationController
   def create
     @message = Message.new(message_params)
     if @message.save
-      redirect_to messages_path
+      flash.now[:notice] = '作成しました'
     else
       render :new, status: :unprocessable_entity
     end
@@ -23,7 +23,7 @@ class MessagesController < ApplicationController
 
   def update
     if @message.update(message_params)
-      redirect_to messages_path
+      flash.now[:notice] = '更新しました'
     else
       render :edit, status: :unprocessable_entity
     end
@@ -31,7 +31,7 @@ class MessagesController < ApplicationController
 
   def destroy
     @message.destroy!
-    redirect_to messages_path
+    flash.now[:alert] = '削除しました'
   end
 
   private
