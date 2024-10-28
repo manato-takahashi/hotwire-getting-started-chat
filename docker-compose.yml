@@ -11,3 +11,8 @@ services:
       - "3000:3000"
     environment:
       - TZ=Asia/Tokyo
+
+  redis:
+    image: "redis:latest"
+    ports:
+      - "6379:6379"
