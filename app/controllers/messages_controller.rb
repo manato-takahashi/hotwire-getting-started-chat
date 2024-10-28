@@ -10,11 +10,14 @@ class MessagesController < ApplicationController
   end
 
   def create
-    @message = Message.new(message_params)
-    if @message.save
-      flash.now[:notice] = '作成しました'
-    else
-      render :new, status: :unprocessable_entity
+    if Entry.where(user_id: current_user.id, room_id: params[:message][:room_id]).present?
+      @message = Message.new(message_params)
+      if @message.save
+        flash.now[:notice] = '作成しました'
+        redirect_to "/rooms/#{@message.room_id}"
+      else
+        redirect_back(fallback_location: root_path)
+      end
     end
   end
 
@@ -37,7 +40,7 @@ class MessagesController < ApplicationController
   private
 
   def message_params
-    params.require(:message).permit(:content)
+    params.require(:message).permit(:user_id, :content, :room_id).merge(user_id: current_user.id)
   end
 
   def set_message

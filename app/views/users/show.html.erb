@@ -1,2 +1,23 @@
-<h1>Users#show</h1>
-<p>Find me in app/views/users/show.html.erb</p>
+<h1>ユーザー詳細ページ</h1>
+
+<div class="user-in">
+<h2><%= @user.email %></h2>
+
+<% if @user.id == current_user.id %>
+    <%= @msg %>
+<% else %>
+    <% if @isRoom == true %>
+        <p><%= link_to 'DMへ', room_path(@roomId) %></p>
+    <% else %>
+        <%= form_for @room do |f| %>
+            <%= fields_for @entry do |e|%>
+                <% e.hidden_field :user_id, value: @user.id %>
+            <% end %>
+        <%= f.submit "DMを開始する"%>
+        <% end %>
+    <% end %>
+<% end %>
+</div>
+
+
+<%= link_to "ユーザー一覧に戻る", users_path %>
